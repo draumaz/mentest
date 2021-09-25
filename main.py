@@ -1,17 +1,7 @@
 import os, sys, pygame, random, time
 from backend import text_cook, screen_res, snd_press, const_hold, opt_swap, cook_strs
 from scr_opt import option_menu
-
-def main_menu(ps, screen):
-    pygame.init()
-    pygame.font.init()
-    pygame.display.set_caption("mentest")
-    #pygame.display.set_icon(pygame.image.load("./lib/img/icon.png")),(0,0)
-    screen.fill((000,000,000))
-    screen.blit(pygame.image.load("./lib/img/logo.png"),(160,50))
-    screen.blit(text_cook("Comic Sans MS", 30, "PLAY", cook_strs(ps)[0]),(100,350))
-    screen.blit(text_cook("Comic Sans MS", 30, "OPTIONS", cook_strs(ps)[1]),(400,350))
-    pygame.display.flip()
+from splash import main_menu
 
 def temp_func(screen):
     main_menu(0, screen)
