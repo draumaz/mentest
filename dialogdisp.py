@@ -17,9 +17,8 @@ def disp_dialog_pause(screen):
                     continue
 
 
-def disp_dialog(screen, screen_color, text, sleep_time, init_pos_x, init_pos_y):
+def disp_dialog(screen, text, sleep_time, init_pos_x, init_pos_y):
     t = list(text)
-    screen.fill(screen_color)
     screen.blit(pygame.image.load("./lib/img/img_dialog.png"), (0,0))
     pygame.display.flip()
     pygame.mixer.init()

@@ -1,4 +1,18 @@
-import pygame, os
+import os, pygame, time
+
+def screen_fade(screen, orig, dest, sleep_time, reverse):
+    for i in range(orig, dest):
+        if reverse == False:
+            screen.fill((i,i,i))
+        else:
+            v = dest-i
+            screen.fill((v,v,v))
+        time.sleep(sleep_time)
+        pygame.display.flip()
+
+def screen_clear(screen, color):
+    screen.fill((color))
+    pygame.display.flip()
 
 def config(ndl):
     if ndl == 0:
@@ -7,7 +21,7 @@ def config(ndl):
         return 20
     elif ndl == 2:
         return 0
-        
+
 def exists():
     if not (os.path.exists(config(0))):
         open(config(0), "w+").write(config(1)*(str(config(2))+"\n"))

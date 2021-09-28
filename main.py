@@ -1,5 +1,5 @@
 import pygame, time, gameloops
-from backend import exists, read
+from backend import exists, read, screen_fade
 
 def main():
     exists()
@@ -9,11 +9,7 @@ def main():
     screen = pygame.display.set_mode((640,480))
     if read()[0] == 0:
         gameloops.WIP_loop(screen)
-        for i in range(0, 255):
-            v = 255-i
-            screen.fill((v,v,v))
-            time.sleep(0.005)
-            pygame.display.flip()
+        screen_fade(screen, 0, 255, 0.005, True)
     gameloops.splash_loop(screen, 0)
 
 if __name__ == "__main__":

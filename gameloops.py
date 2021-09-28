@@ -1,6 +1,6 @@
 import pygame, time, sys
 from dialogdisp import disp_dialog
-from backend import write, text_colors
+from backend import write, text_colors, screen_clear, screen_fade
 
 def splash_loop(screen, active_pos):
     screen.fill((000,000,000))
@@ -18,7 +18,8 @@ def splash_loop(screen, active_pos):
                     if active_pos == 0:
                         pass
                     if active_pos == 1:
-                        disp_dialog(screen, (000,000,000), "Not yet ready!", 0.05, 20, 300)
+                        screen_clear(screen, (000,000,000))
+                        disp_dialog(screen, "Not yet ready!", 0.05, 20, 300)
                         splash_loop(screen, active_pos)
                     if active_pos == 2:
                         sys.exit()
@@ -36,13 +37,11 @@ def splash_loop(screen, active_pos):
                     splash_loop(screen, active_pos)
 
 def WIP_loop(screen):
-    for i in range(0, 256):
-        screen.fill((i,i,i))
-        time.sleep(0.0035)
-        pygame.display.flip()
+    screen_fade(screen, 0, 256, 0.0035, False)
     d = ["...", "You're here early.", "This game's not quite ready.", "...", "Come check out this menu."]
     x = [0.05, 0.05, 0.05, 0.25, 0.05]
     for i in range(0, len(d)):
         time.sleep(0.15)
-        disp_dialog(screen, (255,255,255), d[i], x[i], 20, 300)
+        screen_clear(screen,(255,255,255))
+        disp_dialog(screen, d[i], x[i], 20, 300)
     write(0,1)
