@@ -15,6 +15,8 @@ def splash_loop(screen, active_pos):
                 loop = False
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:   
+                    pygame.mixer.music.load("./lib/snd/snd_menuselect.ogg")
+                    pygame.mixer.music.play()
                     if active_pos == 0:
                         pass
                     if active_pos == 1:
@@ -22,14 +24,21 @@ def splash_loop(screen, active_pos):
                         disp_dialog(screen, "Not yet ready!", 0.05, 20, 300)
                         splash_loop(screen, active_pos)
                     if active_pos == 2:
+                        pygame.mixer.music.load("./lib/snd/snd_quit.ogg")
+                        pygame.mixer.music.play()
+                        time.sleep(0.28)
                         sys.exit()
                 if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                    pygame.mixer.music.load("./lib/snd/snd_menuinteract.ogg")
+                    pygame.mixer.music.play()
                     if active_pos == 0 or active_pos == 2:
                         active_pos = 1
                     elif active_pos == 1:
                         active_pos = 2
                     splash_loop(screen, active_pos)
                 if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                    pygame.mixer.music.load("./lib/snd/snd_menuinteract.ogg")
+                    pygame.mixer.music.play()
                     if active_pos == 0 or active_pos == 1:
                         active_pos = 2
                     elif active_pos == 2:
