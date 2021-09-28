@@ -24,6 +24,11 @@ def disp_dialog(screen, text, sleep_time, init_pos_x, init_pos_y):
     pygame.mixer.init()
     pygame.font.init() 
     for i in range(0, len(t)):
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN or event.key == event.key == pygame.K_KP_ENTER or event.key == pygame.K_LSHIFT or event.key == pygame.K_RSHIFT:
+                    sleep_time = 0
+                break
         screen.blit(pygame.font.SysFont("lucidasans", 25).render(t[i], False, (255,255,255)), (init_pos_x,init_pos_y))
         time.sleep(sleep_time)
         pygame.mixer.music.load("./lib/snd/snd_speech.ogg")

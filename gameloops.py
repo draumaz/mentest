@@ -26,7 +26,7 @@ def splash_loop(screen, active_pos):
                     if active_pos == 2:
                         pygame.mixer.music.load("./lib/snd/snd_quit.ogg")
                         pygame.mixer.music.play()
-                        time.sleep(0.28)
+                        time.sleep(0.17)
                         sys.exit()
                 if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                     pygame.mixer.music.load("./lib/snd/snd_menuinteract.ogg")
