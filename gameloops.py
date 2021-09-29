@@ -12,54 +12,50 @@ def test_board_refresh(screen, img, x, y):
 def test_board_collision(x, y, key):
     v = 0
     if key == "left":
-        if y >= -10 and y <= 190 and x == -10:
+        if x == -10 and y <= 185 and y >= -10:
             v = 0
-        elif y >= 210 and y <= 250 and x == 230:
+        elif x == 225 and y >= 115 and y <= 130:
             v = 0
-        elif x == 230 and y == 110:
+        elif y >= 185 and y <= 275 and x == 225:
             v = 0
-        elif x == 280 and y >= 280 and y <= 440:
-            v = 0
-        elif x >= 230 and x <= 275 and y == 260:
+        elif x == 280 and y >= 270 and y <= 440:
             v = 0
         else:
             v = 5
     elif key == "right":
-        if y >= -10 and y <= 110 and x == 50:
+        if x == 50 and y <= 135 and y >= -10:
             v = 0
-        elif y >= 230 and y <= 250 and x == 390:
+        elif x == 390 and y >= 115 and y <= 175:
             v = 0
-        elif y >= 110 and y <= 150 and x == 390:
+        elif x == 395 and y >= 225 and y <= 260:
             v = 0
-        elif x >= 590 and y >= 170 and y <= 210:
+        elif x == 340 and y >= 270 and y <= 440:
             v = 0
-        elif x == 390 and y >= 230 and y <= 260:
-            v = 0
-        elif x >= 340 and x <= 275 and x == 260:
-            v = 0
-        elif x == 340 and y >= 270 and y <= 430:
+        elif x == 600 and y >= 185:
             v = 0
         else:
             v = 5
     elif key == "up":
-        if x >= -10 and x <= 50 and y == -10:
+        if y == -10 and x >= -10 and x <= 50:
             v = 0
-        elif x >= 70 and x <= 210 and y == 130:
+        elif y == 135 and x >= 60 and x <= 220:
             v = 0
-        elif x >= 230 and x <= 390 and y == 110:
+        elif y == 115 and x >= 225 and x <= 395:
             v = 0
-        elif x >= 410 and x <= 590 and y == 180:
+        elif y == 185 and x >= 395 and x <= 600:
             v = 0
         else:
             v = 5
     elif key == "down":
-        if x >= -10 and x <= 210 and y == 185:
+        if y == 185 and x <= 225 and x >= -10:
             v = 0
-        elif x >= 225 and x <= 280 and y >= 260:
+        elif x >= 225 and x <= 280 and y == 265:
             v = 0
-        elif x >= 340 and x <= 390 and y == 260:
+        elif x >= 340 and x <= 395 and y == 260:
             v = 0
-        elif x >= 410 and x <= 590 and y == 210:
+        elif y == 215 and x >= 395 and x <= 600:
+            v = 0
+        elif y == 435 and x >= 280:
             v = 0
         else:
             v = 5
