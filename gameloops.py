@@ -58,8 +58,8 @@ def test_board(screen):
     img = "./lib/spr/spr_ph_dwn1.png"
     spr1p = 0
     spr2p = 0
-    x = 30
-    y = 30
+    x = 20
+    y = 0
     loop = 0
     while game:   
         pygame.time.delay(30)
@@ -109,7 +109,7 @@ def test_board(screen):
             else:
                 img = "./lib/spr/spr_ph_dwn1.png"
             y += test_board_collision(x,y,"down")
-        #print(x,y)
+        print(x,y)
         test_board_refresh(screen, img, x, y)
         loop += 1
 
