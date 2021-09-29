@@ -69,7 +69,7 @@ def test_board(screen):
             if x == 230 and y == 230 and spr1p > 0 and spr2p > 0:
                 disp_dialog(screen, "im a secret (:", 0.05, 20, 300)
                 test_board_refresh(screen, img, x, y)
-            if x >= 570 and x <= 590 and y == 190:
+            if x >= 570 and x <= 590 and y >= 190 and y <= 210:
                 disp_dialog(screen, "hey man, this is all.", 0.05, 20, 300)
                 test_board_refresh(screen, img, x, y)
                 disp_dialog(screen, "more will come in time...", 0.05, 20, 300)
@@ -77,41 +77,39 @@ def test_board(screen):
                 disp_dialog(screen, "also, the name's stickman.", 0.05, 20, 300)
                 test_board_refresh(screen, img, x, y)
                 spr1p += 1
-                pygame.time.delay(40)
-            if x == 290 and y >= 130 and y <= 150:
+                pygame.time.delay(200)
+            if x >= 200 and x <= 300 and y >= 120 and y <= 150:
                 disp_dialog(screen, "hey, pal!", 0.05, 20, 300)
                 test_board_refresh(screen, img, x, y)
                 disp_dialog(screen, "i am the great stickington.", 0.05, 20, 300)
                 test_board_refresh(screen, img, x, y)
                 spr2p += 1
-                pygame.time.delay(40)
-            continue
+                pygame.time.delay(200)
         if k[pygame.K_LEFT] or k[pygame.K_a]:
-            if loop % 8 == 0:
+            if loop % 16 == 0:
                 img = "./lib/spr/spr_ph_lft2.png"
             else:
                 img = "./lib/spr/spr_ph_lft1.png"
             x -= test_board_collision(x,y,"left")
         if k[pygame.K_RIGHT] or k[pygame.K_d]:
-            if loop % 8 == 0:
+            if loop % 16 == 0:
                 img = "./lib/spr/spr_ph_rght2.png"
             else:
                 img = "./lib/spr/spr_ph_rght1.png"
             x += test_board_collision(x,y,"right")
         if k[pygame.K_UP] or k[pygame.K_w]:
-            if loop % 8 == 0:
+            if loop % 16 == 0:
                 img = "./lib/spr/spr_ph_up2.png"
             else:
                 img = "./lib/spr/spr_ph_up1.png"
-            
             y -= test_board_collision(x,y,"up")
         if k[pygame.K_DOWN] or k[pygame.K_s]:
-            if loop % 8 == 0:
+            if loop % 16 == 0:
                 img = "./lib/spr/spr_ph_dwn2.png"
             else:
                 img = "./lib/spr/spr_ph_dwn1.png"
             y += test_board_collision(x,y,"down")
-        print(x,y)
+        #print(x,y)
         test_board_refresh(screen, img, x, y)
         loop += 1
 
