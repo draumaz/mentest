@@ -18,6 +18,10 @@ def test_board_collision(x, y, key):
             v = 0
         elif x == 230 and y == 110:
             v = 0
+        elif x == 280 and y >= 280 and y <= 440:
+            v = 0
+        elif x >= 230 and x <= 275 and y == 260:
+            v = 0
         else:
             v = 5
     elif key == "right":
@@ -29,6 +33,12 @@ def test_board_collision(x, y, key):
             v = 0
         elif x >= 590 and y >= 170 and y <= 210:
             v = 0
+        elif x == 390 and y >= 230 and y <= 260:
+            v = 0
+        elif x >= 340 and x <= 275 and x == 260:
+            v = 0
+        elif x == 340 and y >= 270 and y <= 430:
+            v = 0
         else:
             v = 5
     elif key == "up":
@@ -38,14 +48,16 @@ def test_board_collision(x, y, key):
             v = 0
         elif x >= 230 and x <= 390 and y == 110:
             v = 0
-        elif x >= 410 and x <= 590 and y == 170:
+        elif x >= 410 and x <= 590 and y == 180:
             v = 0
         else:
             v = 5
     elif key == "down":
-        if x >= -10 and x <= 210 and y == 190:
+        if x >= -10 and x <= 210 and y == 185:
             v = 0
-        elif x >= 230 and x <= 390 and y == 250:
+        elif x >= 225 and x <= 280 and y >= 260:
+            v = 0
+        elif x >= 340 and x <= 390 and y == 260:
             v = 0
         elif x >= 410 and x <= 590 and y == 210:
             v = 0
@@ -62,6 +74,8 @@ def test_board(screen):
     y = 0
     loop = 0
     while game:   
+        if x >= 280 and y >= 420:
+            pass # next world portal
         pygame.time.delay(30)
         pygame.event.get()
         k = pygame.key.get_pressed()
