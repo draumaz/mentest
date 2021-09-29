@@ -49,15 +49,25 @@ def test_board_collision(x, y, key):
 def test_board(screen):
     game = True
     img = "./lib/spr/spr_ph_dwn1.png"
-    poi = 0
+    spr1p = 0
+    spr2p = 0
     x = 30
     y = 30
     loop = 0
-    while game:
+    while game:   
         pygame.time.delay(70)
         pygame.event.get()
         k = pygame.key.get_pressed()
         if k[pygame.K_RETURN] or k[pygame.K_KP_ENTER]:
+            if spr1p > 0 and spr2p > 0:
+                if x == 230 and y == 230:
+                    disp_dialog(screen, "im a secret (:", 0.15, 20, 300)
+                    screen.blit(pygame.image.load("./lib/img/ovr_base1.png"),(0,0))
+                    screen.blit(pygame.image.load('./lib/spr/spr_player.png'),(610,190))
+                    screen.blit(pygame.image.load('./lib/spr/spr_player.png'),(290,110))
+                    screen.blit(pygame.image.load(img),(x,y))
+                    pygame.display.flip()
+                    continue
             if x >= 570 and x <= 590 and y == 190:
                 disp_dialog(screen, "hey man, this is all.", 0.05, 20, 300)
                 screen.blit(pygame.image.load("./lib/img/ovr_base1.png"),(0,0))
@@ -73,6 +83,7 @@ def test_board(screen):
                 pygame.display.flip()
                 disp_dialog(screen, "also, the name's stickman.", 0.05, 20, 300)
                 pygame.time.delay(40)
+                spr1p += 1
                 continue
             if x == 290 and y >= 130 and y <= 150:
                 disp_dialog(screen, "hey, pal!!!", 0.05, 20, 300)
@@ -88,6 +99,8 @@ def test_board(screen):
                 screen.blit(pygame.image.load(img),(x,y))
                 pygame.display.flip()
                 disp_dialog(screen, "our parents sucked at naming", 0.05, 20, 300)
+                spr2p += 1
+                pygame.time.delay(40)
                 continue
         if k[pygame.K_LEFT] or k[pygame.K_a]:
             if loop % 8 == 0:
