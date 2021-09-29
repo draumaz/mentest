@@ -2,6 +2,13 @@ import pygame, time, sys
 from dialogdisp import disp_dialog
 from backend import write, text_colors, screen_clear, screen_fade
 
+def test_board_refresh(screen, img, x, y):
+    screen.blit(pygame.image.load("./lib/img/ovr_base1.png"),(0,0))
+    screen.blit(pygame.image.load('./lib/spr/spr_player.png'),(610,190))
+    screen.blit(pygame.image.load('./lib/spr/spr_player.png'),(290,110))
+    screen.blit(pygame.image.load(img),(x,y))
+    pygame.display.flip()
+
 def test_board_collision(x, y, key):
     v = 0
     if key == "left":
@@ -12,7 +19,7 @@ def test_board_collision(x, y, key):
         elif x == 230 and y == 110:
             v = 0
         else:
-            v = 20
+            v = 5
     elif key == "right":
         if y >= -10 and y <= 110 and x == 50:
             v = 0
@@ -23,7 +30,7 @@ def test_board_collision(x, y, key):
         elif x >= 590 and y >= 170 and y <= 210:
             v = 0
         else:
-            v = 20
+            v = 5
     elif key == "up":
         if x >= -10 and x <= 50 and y == -10:
             v = 0
@@ -34,7 +41,7 @@ def test_board_collision(x, y, key):
         elif x >= 410 and x <= 590 and y == 170:
             v = 0
         else:
-            v = 20
+            v = 5
     elif key == "down":
         if x >= -10 and x <= 210 and y == 190:
             v = 0
@@ -43,7 +50,7 @@ def test_board_collision(x, y, key):
         elif x >= 410 and x <= 590 and y == 210:
             v = 0
         else:
-            v = 20
+            v = 5
     return v
 
 def test_board(screen):
@@ -55,53 +62,30 @@ def test_board(screen):
     y = 30
     loop = 0
     while game:   
-        pygame.time.delay(70)
+        pygame.time.delay(30)
         pygame.event.get()
         k = pygame.key.get_pressed()
         if k[pygame.K_RETURN] or k[pygame.K_KP_ENTER]:
-            if spr1p > 0 and spr2p > 0:
-                if x == 230 and y == 230:
-                    disp_dialog(screen, "im a secret (:", 0.15, 20, 300)
-                    screen.blit(pygame.image.load("./lib/img/ovr_base1.png"),(0,0))
-                    screen.blit(pygame.image.load('./lib/spr/spr_player.png'),(610,190))
-                    screen.blit(pygame.image.load('./lib/spr/spr_player.png'),(290,110))
-                    screen.blit(pygame.image.load(img),(x,y))
-                    pygame.display.flip()
-                    continue
+            if x == 230 and y == 230 and spr1p > 0 and spr2p > 0:
+                disp_dialog(screen, "im a secret (:", 0.05, 20, 300)
+                test_board_refresh(screen, img, x, y)
             if x >= 570 and x <= 590 and y == 190:
                 disp_dialog(screen, "hey man, this is all.", 0.05, 20, 300)
-                screen.blit(pygame.image.load("./lib/img/ovr_base1.png"),(0,0))
-                screen.blit(pygame.image.load('./lib/spr/spr_player.png'),(610,190))
-                screen.blit(pygame.image.load('./lib/spr/spr_player.png'),(290,110))
-                screen.blit(pygame.image.load(img),(x,y))
-                pygame.display.flip()
-                disp_dialog(screen, "more'll come in time...", 0.05, 20, 300)
-                screen.blit(pygame.image.load("./lib/img/ovr_base1.png"),(0,0))
-                screen.blit(pygame.image.load('./lib/spr/spr_player.png'),(610,190))
-                screen.blit(pygame.image.load('./lib/spr/spr_player.png'),(290,110))
-                screen.blit(pygame.image.load(img),(x,y))
-                pygame.display.flip()
+                test_board_refresh(screen, img, x, y)
+                disp_dialog(screen, "more will come in time...", 0.05, 20, 300)
+                test_board_refresh(screen, img, x, y)
                 disp_dialog(screen, "also, the name's stickman.", 0.05, 20, 300)
-                pygame.time.delay(40)
+                test_board_refresh(screen, img, x, y)
                 spr1p += 1
-                continue
+                pygame.time.delay(40)
             if x == 290 and y >= 130 and y <= 150:
-                disp_dialog(screen, "hey, pal!!!", 0.05, 20, 300)
-                screen.blit(pygame.image.load("./lib/img/ovr_base1.png"),(0,0))
-                screen.blit(pygame.image.load('./lib/spr/spr_player.png'),(610,190))
-                screen.blit(pygame.image.load('./lib/spr/spr_player.png'),(290,110))
-                screen.blit(pygame.image.load(img),(x,y))
-                pygame.display.flip()
-                disp_dialog(screen, "im his brother, stickboy", 0.05, 20, 300)
-                screen.blit(pygame.image.load("./lib/img/ovr_base1.png"),(0,0))
-                screen.blit(pygame.image.load('./lib/spr/spr_player.png'),(610,190))
-                screen.blit(pygame.image.load('./lib/spr/spr_player.png'),(290,110))
-                screen.blit(pygame.image.load(img),(x,y))
-                pygame.display.flip()
-                disp_dialog(screen, "our parents sucked at naming", 0.05, 20, 300)
+                disp_dialog(screen, "hey, pal!", 0.05, 20, 300)
+                test_board_refresh(screen, img, x, y)
+                disp_dialog(screen, "i am the great stickington.", 0.05, 20, 300)
+                test_board_refresh(screen, img, x, y)
                 spr2p += 1
                 pygame.time.delay(40)
-                continue
+            continue
         if k[pygame.K_LEFT] or k[pygame.K_a]:
             if loop % 8 == 0:
                 img = "./lib/spr/spr_ph_lft2.png"
@@ -128,11 +112,7 @@ def test_board(screen):
                 img = "./lib/spr/spr_ph_dwn1.png"
             y += test_board_collision(x,y,"down")
         print(x,y)
-        screen.blit(pygame.image.load("./lib/img/ovr_base1.png"),(0,0))
-        screen.blit(pygame.image.load('./lib/spr/spr_player.png'),(610,190))
-        screen.blit(pygame.image.load('./lib/spr/spr_player.png'),(290,110))
-        screen.blit(pygame.image.load(img), (x, y))
-        pygame.display.flip()
+        test_board_refresh(screen, img, x, y)
         loop += 1
 
 def splash_loop_colorizer(screen, active_pos):
@@ -193,7 +173,6 @@ def splash_loop_selector(screen, active_pos):
             pygame.mixer.music.load("./lib/snd/snd_quit.ogg")
             pygame.mixer.music.play()
             time.sleep(0.17)
-            return 2
             sys.exit()
 
 def WIP_loop(screen):
