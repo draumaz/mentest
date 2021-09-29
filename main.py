@@ -12,8 +12,6 @@ def main():
     if read()[0] == 0:
         gameloops.WIP_loop(screen)
         screen_fade(screen, 0, 255, 0.005, True)
-    r = splash_loop_selector(screen, 0)
-    if r == 2:
-        sys.exit()
+    splash_loop_selector(screen, 0)
 if __name__ == "__main__":
     main()
