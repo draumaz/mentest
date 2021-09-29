@@ -1,17 +1,17 @@
-import pygame, time, gameloops, sys
-from backend import exists, read, screen_fade, screen_clear
-from dialogdisp import disp_dialog
-from gameloops import splash_loop, splash_loop_selector
+import pygame
+from backend import savesys, screen_fade
+from gameloops import splash_loop_selector, WIP_loop
 
 def main():
-    exists()
+    savesys.exists()
     pygame.init()
     pygame.font.init()
     pygame.display.set_caption("Mentest")
     screen = pygame.display.set_mode((640,480))
-    if read()[0] == 0:
-        gameloops.WIP_loop(screen)
+    if savesys.read()[0] == 0:
+        WIP_loop(screen)
         screen_fade(screen, 0, 255, 0.005, True)
     splash_loop_selector(screen, 0)
+
 if __name__ == "__main__":
     main()

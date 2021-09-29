@@ -12,10 +12,7 @@ def disp_dialog_pause(screen):
                     screen.fill((255,255,255))
                     screen.blit(pygame.image.load("./lib/img/img_dialog.png"), (0,0))
                     pygame.display.flip()
-                    return 0
-                else:
-                    continue # If the key wasn't valid, don't do anything
-
+                    return
 
 def disp_dialog(screen, text, sleep_time, init_pos_x, init_pos_y):
     t = list(text) # Convert text into string array
@@ -35,7 +32,7 @@ def disp_dialog(screen, text, sleep_time, init_pos_x, init_pos_y):
             mus += "snd_silence.ogg"
         else:
             mus += "snd_speech.ogg"
-        pygame.mixer.music.load(mus)
+        pygame.mixer.music.load(mus) # Inspired by Toby Fox <3
         pygame.mixer.music.play()
         pygame.display.flip()
         init_pos_x += 21.5 # Modify x position for next loop

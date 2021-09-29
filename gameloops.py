@@ -1,15 +1,15 @@
 import pygame, time, sys
 from dialogdisp import disp_dialog
-from backend import write, text_colors, screen_clear, screen_fade
+from backend import savesys, text_colors, screen_fade
 
-def test_board_refresh(screen, img, x, y):
+def test_board_refresh(screen, img, x, y): # Refresh sprite positions and flip display
     screen.blit(pygame.image.load("./lib/img/ovr_base1.png"),(0,0))
     screen.blit(pygame.image.load('./lib/spr/spr_player.png'),(610,190))
     screen.blit(pygame.image.load('./lib/spr/spr_player.png'),(290,110))
     screen.blit(pygame.image.load(img),(x,y))
     pygame.display.flip()
 
-def test_board_collision(x, y, key):
+def test_board_collision(x, y, key): # Rudimentary collision physics
     v = 0
     if key == "left":
         if x == -10 and y <= 185 and y >= -10:
@@ -70,7 +70,7 @@ def test_board(screen):
     y = 0
     loop = 0
     while game:   
-        if x >= 280 and y >= 420:
+        if x >= 280 and y >= 425:
             pass # next world portal
         pygame.time.delay(30)
         pygame.event.get()
@@ -79,6 +79,11 @@ def test_board(screen):
             if x == 230 and y == 230 and spr1p > 0 and spr2p > 0:
                 disp_dialog(screen, "im a secret (:", 0.05, 20, 300)
                 test_board_refresh(screen, img, x, y)
+                pygame.time.delay(200)
+            if x >= 440 and x <= 460 and y <= 0:
+                disp_dialog(screen, "how did you get here?", 0.05, 20, 300)
+                test_board_refresh(screen, img, x, y)
+                pygame.time.delay(200)
             if x >= 570 and x <= 590 and y >= 190 and y <= 210:
                 disp_dialog(screen, "hey man, this is all.", 0.05, 20, 300)
                 test_board_refresh(screen, img, x, y)
@@ -96,25 +101,25 @@ def test_board(screen):
                 spr2p += 1
                 pygame.time.delay(200)
         if k[pygame.K_LEFT] or k[pygame.K_a]:
-            if loop % 16 == 0:
+            if loop % 10 == 0:
                 img = "./lib/spr/spr_ph_lft2.png"
             else:
                 img = "./lib/spr/spr_ph_lft1.png"
             x -= test_board_collision(x,y,"left")
         if k[pygame.K_RIGHT] or k[pygame.K_d]:
-            if loop % 16 == 0:
+            if loop % 10 == 0:
                 img = "./lib/spr/spr_ph_rght2.png"
             else:
                 img = "./lib/spr/spr_ph_rght1.png"
             x += test_board_collision(x,y,"right")
         if k[pygame.K_UP] or k[pygame.K_w]:
-            if loop % 16 == 0:
+            if loop % 10 == 0:
                 img = "./lib/spr/spr_ph_up2.png"
             else:
                 img = "./lib/spr/spr_ph_up1.png"
             y -= test_board_collision(x,y,"up")
         if k[pygame.K_DOWN] or k[pygame.K_s]:
-            if loop % 16 == 0:
+            if loop % 10 == 0:
                 img = "./lib/spr/spr_ph_dwn2.png"
             else:
                 img = "./lib/spr/spr_ph_dwn1.png"
@@ -190,4 +195,4 @@ def WIP_loop(screen):
     for i in range(0, len(d)):
         time.sleep(0.15)
         disp_dialog(screen, d[i], x[i], 20, 300)
-    write(0,1)
+    savesys.write(0,1)
