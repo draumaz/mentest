@@ -11,7 +11,7 @@ def main():
     if savesys.read()[0] == 0:
         WIP_loop(screen)
         screen_fade(screen, 0, 255, 0.005, True)
-    splash_loop_selector(screen, 0)
+    splash_loop_selector(screen)
 
 if __name__ == "__main__":
     main()

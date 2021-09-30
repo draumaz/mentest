@@ -255,7 +255,7 @@ def splash_loop(screen, active_pos):
                     pygame.display.flip()
                     continue
 
-def splash_loop_selector(screen, active_pos):
+def splash_loop_selector(screen):
     l = True
     x = 0
     while l:
@@ -265,11 +265,12 @@ def splash_loop_selector(screen, active_pos):
         elif x == 1:
             pygame.mixer.music.load("./lib/snd/snd_menuselect.ogg")
             pygame.mixer.music.play()
-            if savesys.read()[1] == 0:
-                test_board(screen, 20, 0)
-            else:
+            if savesys.read()[1] == 0: # No save
                 pygame.time.delay(50)
                 loops.board_roomone(screen, 300,200)
+            elif savesys.read()[1] == 1: # Stars save
+                pygame.time.delay(60)
+                loops.board_roomtwo(screen, savesys.read()[2], savesys.read()[3])
                 #test_board2(screen, savesys.read()[2], savesys.read()[3])
             #screen_clear(screen, (000,000,000)) # Draws over display with given color
             #disp_dialog(screen, "Not yet ready!", 0.05, 20, 300) # Feed sleep float and x,y init coords
