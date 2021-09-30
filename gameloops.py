@@ -1,7 +1,7 @@
 import pygame, time, sys
 from dialogdisp import disp_dialog
 from backend import savesys, text_colors, screen_fade
-import gameloops
+import gameloops, loops
 
 def test_board2_collision(x, y, key):
     v = 0
@@ -269,7 +269,8 @@ def splash_loop_selector(screen, active_pos):
                 test_board(screen, 20, 0)
             else:
                 pygame.time.delay(50)
-                test_board2(screen, savesys.read()[2], savesys.read()[3])
+                loops.board_roomone(screen, 300,200)
+                #test_board2(screen, savesys.read()[2], savesys.read()[3])
             #screen_clear(screen, (000,000,000)) # Draws over display with given color
             #disp_dialog(screen, "Not yet ready!", 0.05, 20, 300) # Feed sleep float and x,y init coords
             #screen_clear(screen, (000,000,000))
