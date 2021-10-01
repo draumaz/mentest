@@ -8,10 +8,14 @@ def board_roomtwo_collision(x, y, key):
             v = 0
         elif x <= 265 and y >= 230 and y <= 440:
             v = 0
+        elif x <= 330 and x >= 290 and y >= 185 and y <= 190:
+            v = 0
         else:
             v = 5
     if key == "up":
         if y <= 185 and x >= 0 and x <= 620:
+            v = 0
+        elif x >= 290 and x <= 320 and y <= 200:
             v = 0
         else:
             v = 5
@@ -27,6 +31,8 @@ def board_roomtwo_collision(x, y, key):
             v = 0
         elif x >= 345 and y >= 230 and y <= 440:
             v = 0
+        elif x >= 285 and x <= 290 and y >= 185 and y <= 200:
+            v = 0
         else:
             v = 5
     return v
@@ -35,6 +41,7 @@ def board_roomtwo_refresh(screen, img, x, y, loop):
     screen.blit(pygame.image.load("./lib/img/br2.png"), (0,0))
     if loop > 31 and loop < 61:
         screen.blit(pygame.image.load("./lib/img/br2_bright.png"),(0,0))
+    screen.blit(pygame.image.load("./lib/spr/spr_saveemblem.png"),(300,175))
     screen.blit(pygame.image.load(img),(x,y))
     pygame.display.flip()
 
@@ -53,8 +60,8 @@ def board_roomtwo(screen, x, y):
         k = pygame.key.get_pressed()
         if x == 0 and y >= 185 and y <= 225:
             board_roomone(screen, 590, 200)
-        elif k[pygame.K_RETURN ] or k[pygame.K_KP_ENTER]:
-            if x >= 290 and x <= 320 and y >= 185 and y <= 195:
+        elif k[pygame.K_RETURN] or k[pygame.K_KP_ENTER]:
+            if x >= 270 and x <= 340 and y >= 185 and y <= 215:
                 disp_dialog(screen, "You stare at the stars...", 0.05, 20, 300)
                 board_roomtwo_refresh(screen, img, x, y, loop2)
                 disp_dialog(screen, "You feel like...", 0.05, 20, 300)
@@ -93,7 +100,6 @@ def board_roomtwo(screen, x, y):
             y += board_roomtwo_collision(x, y, "down")
         else:
             loop = 0
-        print(x,y)
         board_roomtwo_refresh(screen, img, x, y, loop2)
         loop += 1
         loop2 += 1
