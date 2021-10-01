@@ -6,6 +6,7 @@ def main():
     savesys.exists()
     pygame.init()
     pygame.font.init()
+    pygame.mouse.set_visible(False)
     pygame.display.set_caption("Mentest")
     screen = pygame.display.set_mode((640,480))
     if savesys.read()[0] == 0:

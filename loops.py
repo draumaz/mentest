@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys
 from dialogdisp import disp_dialog
 from backend import savesys
 
@@ -60,6 +60,16 @@ def board_roomtwo(screen, x, y):
         k = pygame.key.get_pressed()
         if x == 0 and y >= 185 and y <= 225:
             board_roomone(screen, 590, 200)
+        elif k[pygame.K_F12]:
+            if savesys.read()[4] == 0:
+                savesys.write(4,1)
+                screen = pygame.display.set_mode((640,480),pygame.FULLSCREEN)
+            elif savesys.read()[4] == 1:
+                savesys.write(4,0)
+                screen = pygame.display.set_mode((640,480))
+            board_roomtwo_refresh(screen, img, x, y, loop)
+        elif k[pygame.K_ESCAPE]:
+                sys.exit()
         elif k[pygame.K_RETURN] or k[pygame.K_KP_ENTER]:
             if x >= 270 and x <= 340 and y >= 185 and y <= 215:
                 disp_dialog(screen, "You stare at the stars...", 0.05, 20, 300)
@@ -154,6 +164,16 @@ def board_roomone(screen, x, y):
             board_roomtwo(screen, 30, 200)
         elif k[pygame.K_RETURN] or k[pygame.K_KP_ENTER]:
             pass
+        elif k[pygame.K_F12]:
+            if savesys.read()[4] == 0:
+                savesys.write(4,1)
+                screen = pygame.display.set_mode((640,480),pygame.FULLSCREEN)
+            elif savesys.read()[4] == 1:
+                savesys.write(4,0)
+                screen = pygame.display.set_mode((640,480))
+            board_roomone_refresh(screen, img, x, y)
+        elif k[pygame.K_ESCAPE]:
+                sys.exit()
         elif k[pygame.K_LEFT] or k[pygame.K_a]:
             if loop >= 0 and loop <= 15 or loop >= 30 and loop <= 45:
                 img = "./lib/spr/spr_ph_lft2.png"

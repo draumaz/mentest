@@ -216,44 +216,52 @@ def test_board(screen, x, y):
         test_board_refresh(screen, img, x, y)
         loop += 1
 
-def splash_loop_colorizer(screen, active_pos):
-    screen.blit(pygame.font.SysFont("lucidasans", 35).render("PLAY", False, text_colors(active_pos)[1]), (70,370)) # Readying color switch when loop is reloaded
-    screen.blit(pygame.font.SysFont("lucidasans", 35).render("QUIT", False, text_colors(active_pos)[0]), (470,370))
-    
-def splash_loop(screen, active_pos):
+def splash_loop_refresh(screen, active_pos):
     screen.fill((000,000,000))
     screen.blit(pygame.image.load("./lib/img/img_logo.png"),(150,50))
     screen.blit(pygame.font.SysFont("lucidasans", 35).render("PLAY", False, text_colors(active_pos)[1]), (70,370)) # Text colors switch when function is reloaded
     screen.blit(pygame.font.SysFont("lucidasans", 35).render("QUIT", False, text_colors(active_pos)[0]), (470,370))
     pygame.display.flip()
+
+def splash_loop(screen, active_pos):
+    splash_loop_refresh(screen, active_pos)
     loop = True
     while loop:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                loop = False
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
-                    return active_pos
-                if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                    pygame.mixer.music.load("./lib/snd/snd_menuinteract.ogg")
-                    pygame.mixer.music.play()
-                    if active_pos == 0 or active_pos == 2: # Color redirectors
-                        active_pos = 1
-                    elif active_pos == 1:
-                        active_pos = 2
-                    splash_loop_colorizer(screen, active_pos)
-                    pygame.display.flip() # Flip display
-                    continue # Reload loop
-                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                    pygame.mixer.music.load("./lib/snd/snd_menuinteract.ogg")
-                    pygame.mixer.music.play()
-                    if active_pos == 0 or active_pos == 1:
-                        active_pos = 2
-                    elif active_pos == 2:
-                        active_pos = 1
-                    splash_loop_colorizer(screen, active_pos)
-                    pygame.display.flip()
-                    continue
+        pygame.event.get()
+        k = pygame.key.get_pressed()
+        if k[pygame.K_RETURN] or k[pygame.K_KP_ENTER]:
+            return active_pos
+        if k[pygame.K_F12]:
+            if savesys.read()[4] == 0:
+                savesys.write(4,1)
+                screen = pygame.display.set_mode((640,480),pygame.FULLSCREEN)
+            elif savesys.read()[4] == 1:
+                savesys.write(4,0)
+                screen = pygame.display.set_mode((640,480))
+            splash_loop_refresh(screen, active_pos)
+            continue
+        if k[pygame.K_ESCAPE]:
+            sys.exit()
+        if k[pygame.K_LEFT] or k[pygame.K_a]:
+            pygame.mixer.music.load("./lib/snd/snd_menuinteract.ogg")
+            pygame.mixer.music.play()
+            if active_pos == 0 or active_pos == 2: # Color redirectors
+                active_pos = 1
+            elif active_pos == 1:
+                active_pos = 2
+            splash_loop_refresh(screen, active_pos)
+            pygame.time.delay(200)
+            continue # Reload loop
+        if k[pygame.K_RIGHT] or k[pygame.K_d]:
+            pygame.mixer.music.load("./lib/snd/snd_menuinteract.ogg")
+            pygame.mixer.music.play()
+            if active_pos == 0 or active_pos == 1:
+                active_pos = 2
+            elif active_pos == 2:
+                active_pos = 1
+            splash_loop_refresh(screen, active_pos)
+            pygame.time.delay(200)
+            continue
 
 def splash_loop_selector(screen):
     l = True
