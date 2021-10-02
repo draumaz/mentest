@@ -1,6 +1,6 @@
 import pygame
 from backend import savesys, screen_fade
-from gameloops import splash_loop_selector, WIP_loop
+from loops import splash_loop_selector, WIP_loop
 
 def main():
     savesys.exists()

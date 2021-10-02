@@ -20,9 +20,21 @@ def text_colors(active_sel): # Return active colors from selector
     if active_sel == 0:
         return (white,white)
     elif active_sel == 1:
-        return (white,green)
-    elif active_sel == 2:
         return (green,white)
+    elif active_sel == 2:
+        return (white,green)
+
+def text_colors_trip(active_sel): # Return active colors from selector
+    white = (255,255,255)
+    green = (50,205,50)
+    if active_sel == 0:
+        return (white,white,white)
+    elif active_sel == 1:
+        return (green,white,white)
+    elif active_sel == 2:
+        return (white,green,white)
+    elif active_sel == 3:
+        return (white,white,green)
 
 class savesys:
     def config(ndl): # Savesys

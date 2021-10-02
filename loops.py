@@ -1,6 +1,8 @@
-import pygame, sys
+import pygame, sys, time
+
+from pygame.constants import QUIT
 from dialogdisp import disp_dialog
-from backend import savesys
+from backend import savesys, text_colors, text_colors_trip, screen_fade
 
 def board_roomtwo_collision(x, y, key):
     if key == "left":
@@ -60,16 +62,9 @@ def board_roomtwo(screen, x, y):
         k = pygame.key.get_pressed()
         if x == 0 and y >= 185 and y <= 225:
             board_roomone(screen, 590, 200)
-        elif k[pygame.K_F12]:
-            if savesys.read()[4] == 0:
-                savesys.write(4,1)
-                screen = pygame.display.set_mode((640,480),pygame.FULLSCREEN)
-            elif savesys.read()[4] == 1:
-                savesys.write(4,0)
-                screen = pygame.display.set_mode((640,480))
-            board_roomtwo_refresh(screen, img, x, y, loop)
         elif k[pygame.K_ESCAPE]:
-                sys.exit()
+            pygame.time.delay(100)
+            splash_loop_selector(screen)
         elif k[pygame.K_RETURN] or k[pygame.K_KP_ENTER]:
             if x >= 270 and x <= 340 and y >= 185 and y <= 215:
                 disp_dialog(screen, "You stare at the stars...", 0.05, 20, 300)
@@ -164,16 +159,9 @@ def board_roomone(screen, x, y):
             board_roomtwo(screen, 30, 200)
         elif k[pygame.K_RETURN] or k[pygame.K_KP_ENTER]:
             pass
-        elif k[pygame.K_F12]:
-            if savesys.read()[4] == 0:
-                savesys.write(4,1)
-                screen = pygame.display.set_mode((640,480),pygame.FULLSCREEN)
-            elif savesys.read()[4] == 1:
-                savesys.write(4,0)
-                screen = pygame.display.set_mode((640,480))
-            board_roomone_refresh(screen, img, x, y)
         elif k[pygame.K_ESCAPE]:
-                sys.exit()
+            pygame.time.delay(100)
+            splash_loop_selector(screen)
         elif k[pygame.K_LEFT] or k[pygame.K_a]:
             if loop >= 0 and loop <= 15 or loop >= 30 and loop <= 45:
                 img = "./lib/spr/spr_ph_lft2.png"
@@ -203,3 +191,86 @@ def board_roomone(screen, x, y):
         print(x,y)
         board_roomone_refresh(screen, img, x, y)
         loop += 1
+
+def options_loop(screen, active_pos):
+    screen.fill((000,000,000))
+    screen.blit(pygame.font.SysFont("lucidasans", 35).render("FULLSCREEN", False, text_colors(active_pos)[0]), (70,370))
+    screen.blit(pygame.font.SysFont("lucidasans", 35).render("BACK", False, text_colors(active_pos)[1]), (470,370))
+    pygame.display.flip()
+
+def splash_loop_refresh(screen, active_pos):
+    screen.fill((000,000,000))
+    screen.blit(pygame.image.load("./lib/img/img_logo.png"),(150,50))
+    screen.blit(pygame.font.SysFont("lucidasans", 35).render("PLAY", False, text_colors_trip(active_pos)[0]), (70,370)) # Text colors switch when function is reloaded
+    screen.blit(pygame.font.SysFont("lucidasans", 35).render("FULLSCREEN", False, text_colors_trip(active_pos)[1]), (210,370))
+    screen.blit(pygame.font.SysFont("lucidasans", 35).render("QUIT", False, text_colors_trip(active_pos)[2]), (470,370))
+    pygame.display.flip()
+
+def splash_loop(screen, active_pos):
+    splash_loop_refresh(screen, active_pos)
+    loop = True
+    while loop:
+        pygame.event.get()
+        k = pygame.key.get_pressed()
+        if k[pygame.K_RETURN] or k[pygame.K_KP_ENTER]:
+            return active_pos
+        if k[pygame.K_LEFT] or k[pygame.K_a]:
+            pygame.mixer.music.load("./lib/snd/snd_menuinteract.ogg")
+            pygame.mixer.music.play()
+            if active_pos == 0:
+                active_pos = 1
+            else:
+                active_pos -= 1
+                if active_pos < 1:
+                    active_pos = 3
+            splash_loop_refresh(screen, active_pos)
+            pygame.time.delay(150)
+            continue # Reload loop
+        if k[pygame.K_RIGHT] or k[pygame.K_d]:
+            pygame.mixer.music.load("./lib/snd/snd_menuinteract.ogg")
+            pygame.mixer.music.play()
+            active_pos += 1
+            if active_pos > 3:
+                active_pos = 1
+            splash_loop_refresh(screen, active_pos)
+            pygame.time.delay(150)
+            continue
+
+def splash_loop_selector(screen):
+    l = True
+    x = 0
+    while l:
+        x = splash_loop(screen, x)
+        if x == 0:
+            continue
+        elif x == 1:
+            pygame.mixer.music.load("./lib/snd/snd_menuselect.ogg")
+            pygame.mixer.music.play()
+            pygame.time.delay(200)
+            if savesys.read()[1] == 0: # No save
+                board_roomone(screen, 300,200)
+            elif savesys.read()[1] == 1: # Stars save
+                board_roomtwo(screen, savesys.read()[2], savesys.read()[3])
+        elif x == 2:
+            if savesys.read()[4] == 0:
+                savesys.write(4,1)
+                screen = pygame.display.set_mode((640,480),pygame.FULLSCREEN)
+            elif savesys.read()[4] == 1:
+                savesys.write(4,0)
+                screen = pygame.display.set_mode((640,480)) # Fullscreen
+            continue
+        elif x == 3:
+            pygame.mixer.music.load("./lib/snd/snd_quit.ogg")
+            pygame.mixer.music.play()
+            time.sleep(0.17)
+            sys.exit()
+
+def WIP_loop(screen):
+    pygame.event.get()
+    screen_fade(screen, 0, 256, 0.0035, False)
+    d = ["...", "You're here early.", "This game's not quite ready.", "The graphics suck, but...", "Here's what I've got!"]
+    x = [0.05, 0.05, 0.05, 0.05, 0.05]
+    for i in range(0, len(d)):
+        time.sleep(0.15)
+        disp_dialog(screen, d[i], x[i], 20, 300)
+    savesys.write(0,1)
