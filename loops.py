@@ -155,7 +155,7 @@ def board_roomone(screen, x, y):
         pygame.time.delay(30)
         pygame.event.get()
         k = pygame.key.get_pressed()
-        if x >= 600 and y >= 190 and y <= 225:
+        if x >= 600 and y >= 180 and y <= 225:
             board_roomtwo(screen, 30, 200)
         elif k[pygame.K_RETURN] or k[pygame.K_KP_ENTER]:
             pass
@@ -229,9 +229,12 @@ def splash_loop(screen, active_pos):
         if k[pygame.K_RIGHT] or k[pygame.K_d]:
             pygame.mixer.music.load("./lib/snd/snd_menuinteract.ogg")
             pygame.mixer.music.play()
-            active_pos += 1
-            if active_pos > 3:
-                active_pos = 1
+            if active_pos == 0:
+                active_pos = 3
+            else:
+                active_pos += 1
+                if active_pos > 3:
+                    active_pos = 1
             splash_loop_refresh(screen, active_pos)
             pygame.time.delay(150)
             continue
