@@ -22,7 +22,9 @@ class room_two():
             else:
                 v = 5
         if key == "down":
-            if y >= 225 and x >= 0 and x <= 260 or y >= 225 and x >= 350 and x <= 620:
+            if y >= 225 and x >= 0 and x <= 260:
+                v = 0
+            elif y >= 225 and x >= 350 and x <= 620:
                 v = 0
             elif y >= 440 and x >= 265 and x <= 345:
                 v = 0
@@ -48,21 +50,20 @@ class room_two():
     def events(k, screen, img, loop, loop2, x, y):
         if k[pygame.K_ESCAPE]:
             pygame.time.delay(100)
-            splash_loop_selector(screen)
+            splash.board(screen)
         elif k[pygame.K_RETURN] or k[pygame.K_KP_ENTER]:
             if x >= 270 and x <= 340 and y >= 185 and y <= 215:
-                disp_dialog(screen, "You stare at the stars...", 0.05, 20, 300)
-                room_two.refresh(screen, img, x, y, loop2)
-                disp_dialog(screen, "You feel like...", 0.05, 20, 300)
-                room_two.refresh(screen, img, x, y, loop2)
-                disp_dialog(screen, "...everything'll be OK.", 0.05, 20, 300)
-                room_two._refresh(screen, img, x, y, loop2)
-                savesys.write(1, 1)
-                savesys.write(2, x)
-                savesys.write(3, y)
-                disp_dialog(screen, "Your game has been saved.", 0.025, 20, 300)
-                room_two.refresh(screen, img, x, y, loop2)
+                h = ["You stare at the stars...", "You feel like...", "...everything'll be okay.", "Your game has been saved."]
+                for k in range(0,4):
+                    print(k)
+                    if k == 2:
+                        savesys.write(1, 1)
+                        savesys.write(2, x)
+                        savesys.write(3, y)
+                    disp_dialog(screen, h[k], 0.05, 20, 300)
+                    room_two.refresh(screen, img, x, y, loop2)
                 pygame.time.delay(200)
+                room_two.board(screen, x, y)
         elif k[pygame.K_LEFT] or k[pygame.K_a]:
             if k[pygame.K_UP] or k[pygame.K_w]:
                 y -= room_two.collision(x, y, "up")
@@ -161,7 +162,7 @@ class room_one():
     def events(k, screen, loop, img, x, y):
         if k[pygame.K_ESCAPE]:
             pygame.time.delay(100)
-            splash_loop_selector(screen)
+            splash.board(screen)
         elif k[pygame.K_LEFT] or k[pygame.K_a]:
             if k[pygame.K_UP] or k[pygame.K_w]:
                 y -= room_one.collision(x, y, "up")
