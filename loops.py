@@ -55,14 +55,13 @@ class room_two():
             if x >= 270 and x <= 340 and y >= 185 and y <= 215:
                 h = ["You stare at the stars...", "You feel like...", "...everything'll be okay.", "Your game has been saved."]
                 b = [1, x, y]
-                for k in range(0,4):
+                for k in range(0,len(h)):
                     if k == 3:
-                        for n in range(1,4):
+                        for n in range(1,len(h)):
                             savesys.write(n, b[n-1])
                     disp_dialog(screen, h[k], 0.05, 20, 300)
                     room_two.refresh(screen, img, x, y, loop2)
                 pygame.time.delay(100)
-                room_two.board(screen, x, y)
         elif k[pygame.K_LEFT] or k[pygame.K_a]:
             if k[pygame.K_UP] or k[pygame.K_w]:
                 y -= room_two.collision(x, y, "up")
@@ -113,11 +112,12 @@ class room_two():
             k = pygame.key.get_pressed()
             if x == 0 and y >= 185 and y <= 225:
                 room_one.board(screen, 590, y)
-            loop = room_two.events(k, screen, img, loop, loop2, x, y)[0]
-            loop2 = room_two.events(k, screen, img, loop, loop2, x, y)[1]
-            img = room_two.events(k, screen, img, loop, loop2, x, y)[2]
-            x = room_two.events(k, screen, img, loop, loop2, x, y)[3]
-            y = room_two.events(k, screen, img, loop, loop2, x, y)[4]
+            events = room_two.events(k, screen, img, loop, loop2, x, y)
+            loop = events[0]
+            loop2 = events[1]
+            img = events[2]
+            x = events[3]
+            y = events[4]
             room_two.refresh(screen, img, x, y, loop2)
             print(x,y)
             loop += 1
@@ -209,10 +209,11 @@ class room_one():
             k = pygame.key.get_pressed()
             if x >= 600 and y >= 180 and y <= 225:
                 room_two.board(screen, 30, 200)
-            loop = room_one.events(k, screen, loop, img, x, y)[0]            
-            x = room_one.events(k, screen, loop, img, x, y)[1]
-            y = room_one.events(k, screen, loop, img, x, y)[2]
-            img = room_one.events(k, screen, loop, img, x, y)[3]
+            events = room_one.events(k, screen, loop, img, x, y)
+            loop = events[0]            
+            x = events[1]
+            y = events[2]
+            img = events[3]
             print(x,y)
             room_one.refresh(screen, img, x, y)
             loop += 1
@@ -221,16 +222,18 @@ class splash():
     def refresh(screen, active_pos):
         screen.fill((000,000,000))
         screen.blit(pygame.image.load("./lib/img/img_logo.png"),(150,50))
-        screen.blit(pygame.font.SysFont("lucidasans", 35).render("PLAY", False, text_colors_trip(active_pos)[0]), (70,370)) # Text colors switch when function is reloaded
-        screen.blit(pygame.font.SysFont("lucidasans", 35).render("FULLSCREEN", False, text_colors_trip(active_pos)[1]), (210,370))
-        screen.blit(pygame.font.SysFont("lucidasans", 35).render("QUIT", False, text_colors_trip(active_pos)[2]), (470,370))
+        h = ["PLAY", "FULLSCREEN", "QUIT"]
+        b = [70, 210, 470]
+        for i in range(0, 3):
+            screen.blit(pygame.font.SysFont("lucidasans", 35).render(h[i], False, text_colors_trip(active_pos)[i]), (b[i],370)) # Text colors switch when function is reloaded
         pygame.display.flip()
     def events(screen, active_pos):
-        (screen, active_pos)
         loop = True
         while loop:
             pygame.event.get()
             k = pygame.key.get_pressed()
+            if k[pygame.K_ESCAPE]:
+                sys.exit()
             if k[pygame.K_RETURN] or k[pygame.K_KP_ENTER]:
                 return active_pos
             if k[pygame.K_LEFT] or k[pygame.K_a]:
