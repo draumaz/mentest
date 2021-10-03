@@ -1,6 +1,6 @@
 import pygame
 from backend import savesys, screen_fade
-from loops import splash_loop_selector, WIP_loop
+from loops import splash, WIP_loop
 
 def main():
     savesys.exists()
@@ -12,7 +12,7 @@ def main():
     if savesys.read()[0] == 0:
         WIP_loop(screen)
         screen_fade(screen, 0, 255, 0.005, True)
-    splash_loop_selector(screen)
+    splash.board(screen)
 
 if __name__ == "__main__":
     main()
