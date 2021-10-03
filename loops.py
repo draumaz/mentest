@@ -54,15 +54,14 @@ class room_two():
         elif k[pygame.K_RETURN] or k[pygame.K_KP_ENTER]:
             if x >= 270 and x <= 340 and y >= 185 and y <= 215:
                 h = ["You stare at the stars...", "You feel like...", "...everything'll be okay.", "Your game has been saved."]
+                b = [1, x, y]
                 for k in range(0,4):
-                    print(k)
-                    if k == 2:
-                        savesys.write(1, 1)
-                        savesys.write(2, x)
-                        savesys.write(3, y)
+                    if k == 3:
+                        for n in range(1,4):
+                            savesys.write(n, b[n-1])
                     disp_dialog(screen, h[k], 0.05, 20, 300)
                     room_two.refresh(screen, img, x, y, loop2)
-                pygame.time.delay(200)
+                pygame.time.delay(100)
                 room_two.board(screen, x, y)
         elif k[pygame.K_LEFT] or k[pygame.K_a]:
             if k[pygame.K_UP] or k[pygame.K_w]:
