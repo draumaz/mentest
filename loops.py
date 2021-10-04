@@ -60,7 +60,7 @@ class room_two():
                     "...everything'll be okay.", 
                     "Your game has been saved."
                 ]
-                b = [1, x, y]
+                b = [1, round(x), round(y)]
                 for k in range(0,len(h)):
                     if k == 3:
                         for n in range(1,len(h)):
