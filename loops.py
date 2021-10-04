@@ -13,14 +13,14 @@ class room_two():
             elif x <= 330 and x >= 290 and y >= 185 and y <= 190:
                 v = 0
             else:
-                v = 2
+                v = 10
         if key == "up":
             if y <= 185 and x >= 0 and x <= 620:
                 v = 0
             elif x >= 290 and x <= 320 and y <= 200:
                 v = 0
             else:
-                v = 2
+                v = 10
         if key == "down":
             if y >= 225 and x >= 0 and x <= 260:
                 v = 0
@@ -29,7 +29,7 @@ class room_two():
             elif y >= 440 and x >= 265 and x <= 345:
                 v = 0
             else:
-                v = 2
+                v = 10
         if key == "right":
             if x >= 620 and y >= 185 and y <= 620:
                 v = 0
@@ -38,7 +38,7 @@ class room_two():
             elif x >= 285 and x <= 290 and y >= 185 and y <= 200:
                 v = 0
             else:
-                v = 2
+                v = 10
         return v
     def refresh(screen, img, x, y, loop):
         screen.blit(pygame.image.load("./lib/img/br2.png"), (0,0))
@@ -47,7 +47,8 @@ class room_two():
         screen.blit(pygame.image.load("./lib/spr/spr_saveemblem.png"),(300,175))
         screen.blit(pygame.image.load(img),(x,y))
         pygame.display.flip()
-    def events(k, screen, img, loop, loop2, x, y):
+    def events(k, screen, img, loop, loop2, x, y, clock):
+        tck = clock.tick(60) / 75
         if k[pygame.K_ESCAPE]:
             pygame.time.delay(100)
             splash.board(screen)
@@ -69,36 +70,36 @@ class room_two():
                 pygame.time.delay(100)
         elif k[pygame.K_LEFT] or k[pygame.K_a]:
             if k[pygame.K_UP] or k[pygame.K_w]:
-                y -= room_two.collision(x, y, "up")
+                y -= room_two.collision(x, y, "up") * tck
             if k[pygame.K_DOWN] or k[pygame.K_s]:
-                y += room_two.collision(x, y, "down")
+                y += room_two.collision(x, y, "down") * tck
             if loop >= 0 and loop <= 15 or loop >= 30 and loop <= 45 or loop >= 60 and loop <= 75 or loop >= 90 and loop <= 105:
                 img = "./lib/spr/spr_ph_lft2.png"
             else:
                 img = "./lib/spr/spr_ph_lft1.png"
-            x -= room_two.collision(x, y, "left")
+            x -= room_two.collision(x, y, "left") * tck
         elif k[pygame.K_RIGHT] or k[pygame.K_d]:
             if k[pygame.K_UP] or k[pygame.K_w]:
-                y -= room_two.collision(x, y, "up")
+                y -= room_two.collision(x, y, "up") * tck
             if k[pygame.K_DOWN] or k[pygame.K_s]:
-                y += room_two.collision(x, y, "down")
+                y += room_two.collision(x, y, "down") * tck
             if loop >= 0 and loop <= 15 or loop >= 30 and loop <= 45 or loop >= 60 and loop <= 75 or loop >= 90 and loop <= 105:
                 img = "./lib/spr/spr_ph_rght2.png"
             else:
                 img = "./lib/spr/spr_ph_rght1.png"
-            x += room_two.collision(x, y, "right")
+            x += room_two.collision(x, y, "right") * tck
         elif k[pygame.K_UP] or k[pygame.K_w]:
             if loop >= 0 and loop <= 15 or loop >= 30 and loop <= 45 or loop >= 60 and loop <= 75 or loop >= 90 and loop <= 105:
                 img = "./lib/spr/spr_ph_up2.png" 
             else:
                 img = "./lib/spr/spr_ph_up1.png"
-            y -= room_two.collision(x, y, "up")
+            y -= room_two.collision(x, y, "up") * tck
         elif k[pygame.K_DOWN] or k[pygame.K_s]:
             if loop >= 0 and loop <= 15 or loop >= 30 and loop <= 45 or loop >= 60 and loop <= 75 or loop >= 90 and loop <= 105:
                 img = "./lib/spr/spr_ph_dwn2.png"
             else:
                 img = "./lib/spr/spr_ph_dwn1.png"
-            y += room_two.collision(x, y, "down")
+            y += room_two.collision(x, y, "down") * tck
         else:
             loop = 0
         return [loop,loop2,img,x,y]
@@ -107,24 +108,24 @@ class room_two():
         img = './lib/spr/spr_ph_dwn1.png'
         loop = 0
         loop2 = 0
+        clock = pygame.time.Clock()
         while game:
             if loop > 120:
                 loop = 0
             if loop2 > 120:
                 loop2 = 0
-            pygame.time.delay(10)
             pygame.event.get()
             k = pygame.key.get_pressed()
             if x <= 10 and y >= 180 and y <= 226:
                 room_one.board(screen, 590, y)
-            events = room_two.events(k, screen, img, loop, loop2, x, y)
+            events = room_two.events(k, screen, img, loop, loop2, x, y, clock)
             loop = events[0]
             loop2 = events[1]
             img = events[2]
             x = events[3]
             y = events[4]
             room_two.refresh(screen, img, x, y, loop2)
-            print(x,y)
+            print(round(x),round(y))
             #print(loop,loop2)
             loop += 1
             loop2 += 1
@@ -135,7 +136,7 @@ class room_one():
             if x <= 40 and y >= 20 and y <= 405:
                 v = 0
             else:
-                v = 2
+                v = 10
         if dir == "right":
             if x >= 575 and y >= 20 and y <= 170:
                 v = 0
@@ -144,62 +145,63 @@ class room_one():
             elif x >= 610 and y >= 190 and y <= 225:
                 v = 0
             else:
-                v = 2
+                v = 10
         if dir == "up":
             if y <= 20 and x >= 30 and x <= 580:
                 v = 0
             elif y <= 190 and x >= 580 and x <= 620:
                 v = 0
             else:
-                v = 2
+                v = 10
         if dir == "down":
             if y >= 225 and x >= 580 and x <= 620:
                 v = 0
             elif y >= 405 and x <= 580 and x >= 30:
                 v = 0
             else:
-                v = 2
+                v = 10
         return v
     def refresh(screen, img, x, y):
         screen.blit(pygame.image.load("./lib/img/br1.png"), (0,0))
         screen.blit(pygame.image.load(img),(x,y))
         pygame.display.flip()
-    def events(k, screen, loop, img, x, y):
+    def events(k, screen, loop, img, x, y, clock):
+        tck = clock.tick(60) / 75
         if k[pygame.K_ESCAPE]:
             pygame.time.delay(100)
             splash.board(screen)
         elif k[pygame.K_LEFT] or k[pygame.K_a]:
             if k[pygame.K_UP] or k[pygame.K_w]:
-                y -= room_one.collision(x, y, "up")
+                y -= room_one.collision(x, y, "up") * tck
             if k[pygame.K_DOWN] or k[pygame.K_s]:
-                y += room_one.collision(x, y, "down")
+                y += room_one.collision(x, y, "down") * tck
             if loop >= 0 and loop <= 15 or loop >= 30 and loop <= 45 or loop >= 60 and loop <= 75 or loop >= 90 and loop <= 105:
                 img = "./lib/spr/spr_ph_lft2.png"
             else:
                 img = "./lib/spr/spr_ph_lft1.png"
-            x -= room_one.collision(x, y, "left")
+            x -= room_one.collision(x, y, "left") * tck
         elif k[pygame.K_RIGHT] or k[pygame.K_d]:
             if k[pygame.K_UP] or k[pygame.K_w]:
-                y -= room_one.collision(x, y, "up")
+                y -= room_one.collision(x, y, "up") * tck
             if k[pygame.K_DOWN] or k[pygame.K_s]:
-                y += room_one.collision(x, y, "down")
+                y += room_one.collision(x, y, "down") * tck
             if loop >= 0 and loop <= 15 or loop >= 30 and loop <= 45 or loop >= 60 and loop <= 75 or loop >= 90 and loop <= 105:
                 img = "./lib/spr/spr_ph_rght2.png"
             else:
                 img = "./lib/spr/spr_ph_rght1.png"
-            x += room_one.collision(x, y, "right")
+            x += room_one.collision(x, y, "right") * tck
         elif k[pygame.K_UP] or k[pygame.K_w]:
             if loop >= 0 and loop <= 15 or loop >= 30 and loop <= 45 or loop >= 60 and loop <= 75 or loop >= 90 and loop <= 105:
                 img = "./lib/spr/spr_ph_up2.png"
             else:
                 img = "./lib/spr/spr_ph_up1.png"
-            y -= room_one.collision(x, y, "up")
+            y -= room_one.collision(x, y, "up") * tck
         elif k[pygame.K_DOWN] or k[pygame.K_s]:
             if loop >= 0 and loop <= 15 or loop >= 30 and loop <= 45 or loop >= 60 and loop <= 75 or loop >= 90 and loop <= 105:
                 img = "./lib/spr/spr_ph_dwn2.png"
             else:
                 img = "./lib/spr/spr_ph_dwn1.png"
-            y += room_one.collision(x, y, "down")
+            y += room_one.collision(x, y, "down") * tck
         else:
             loop = 0
         return [loop,x,y,img]
@@ -207,20 +209,20 @@ class room_one():
         game = True
         img = './lib/spr/spr_ph_dwn1.png'
         loop = 0
+        clock = pygame.time.Clock()
         while game:
             if loop > 120:
                 loop = 0
-            pygame.time.delay(10)
             pygame.event.get()
             k = pygame.key.get_pressed()
             if x >= 600 and y >= 180 and y <= 225:
                 room_two.board(screen, 30, 200)
-            events = room_one.events(k, screen, loop, img, x, y)
+            events = room_one.events(k, screen, loop, img, x, y, clock)
             loop = events[0]            
             x = events[1]
             y = events[2]
             img = events[3]
-            print(x,y)
+            print(round(x),round(y))
             #print(loop)
             room_one.refresh(screen, img, x, y)
             loop += 1
