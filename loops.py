@@ -7,39 +7,42 @@ class room_two():
     def collision(x, y, key):
         if key == "left":
             if x <= -5 and y >= 185 and y <= 225:
-                v = 0
+                v = False
             elif x <= 268 and y >= 230 and y <= 440:
-                v = 0
+                v = False
             elif x <= 330 and x >= 290 and y >= 180 and y <= 190:
-                v = 0
+                v = False
             else:
-                v = 10
+                v = True
         if key == "up":
             if y <= 185 and x >= 0 and x <= 620:
-                v = 0
+                v = False
             elif x >= 290 and x <= 320 and y <= 200:
-                v = 0
+                v = False
             else:
-                v = 10
+                v = True
         if key == "down":
             if y >= 225 and x >= 0 and x <= 260:
-                v = 0
+                v = False
             elif y >= 225 and x >= 350 and x <= 630:
-                v = 0
+                v = False
             elif y >= 430 and x >= 265 and x <= 345:
-                v = 0
+                v = False
             else:
-                v = 10
+                v = True
         if key == "right":
             if x >= 618 and y >= 180 and y <= 228:
-                v = 0
+                v = False
             elif x >= 342 and y >= 230 and y <= 440:
-                v = 0
+                v = False
             elif x >= 280 and x <= 290 and y >= 180 and y <= 200:
-                v = 0
+                v = False
             else:
-                v = 10
-        return v
+                v = True
+        if v == True:
+            return 10
+        elif v == False:
+            return 0
     def refresh(screen, img, x, y, loop):
         screen.blit(pygame.image.load("./lib/img/br2.png"), (0,0))
         if loop > 59 and loop < 91:
@@ -54,18 +57,25 @@ class room_two():
             splash.board(screen)
         elif k[pygame.K_RETURN] or k[pygame.K_KP_ENTER]:
             if x >= 270 and x <= 340 and y >= 185 and y <= 215:
-                h = [
-                    "You stare at the stars...", 
-                    "You feel like...", 
-                    "...everything'll be okay.", 
-                    "Your game has been saved."
-                ]
-                b = [1, round(x), round(y)]
-                for k in range(0,len(h)):
-                    if k == 3:
-                        for n in range(1,len(h)):
-                            savesys.write(n, b[n-1])
-                    disp_dialog(screen, h[k], 0.05, 20, 300)
+                if savesys.read()[1] == 0:
+                    h = [
+                        "You stare at the stars...", 
+                        "You feel like...", 
+                        "...everything'll be okay.", 
+                        "Your game has been saved."
+                    ]
+                    b = [1, round(x), round(y)]
+                    for k in range(0,len(h)):
+                        if k == 3:
+                            for n in range(1,len(h)):
+                                savesys.write(n, b[n-1])
+                        disp_dialog(screen, h[k], 0.05, 20, 300)
+                        room_two.refresh(screen, img, x, y, loop2)
+                else:
+                    b = [round(x), round(y)]
+                    for n in range(0, len(b)):
+                        savesys.write(n+2, b[n])
+                    disp_dialog(screen, "Your game has been saved.", 0.05, 20, 300)
                     room_two.refresh(screen, img, x, y, loop2)
                 pygame.time.delay(100)
         elif k[pygame.K_LEFT] or k[pygame.K_a]:
@@ -133,34 +143,37 @@ class room_two():
 class room_one():
     def collision(x, y, dir):
         if dir == "left":
-            if x <= 40 and y >= 20 and y <= 405:
-                v = 0
+            if x <= 40 and y >= 15 and y <= 407:
+                v = False
             else:
-                v = 10
+                v = True
         if dir == "right":
-            if x >= 575 and y >= 20 and y <= 170:
-                v = 0
-            elif x >= 575 and y >= 230 and y <= 400:
-                v = 0
+            if x >= 575 and y >= 15 and y <= 185:
+                v = False
+            elif x >= 575 and y >= 230 and y <= 406:
+                v = False
             elif x >= 610 and y >= 190 and y <= 225:
-                v = 0
+                v = False
             else:
-                v = 10
+                v = True
         if dir == "up":
-            if y <= 20 and x >= 30 and x <= 580:
-                v = 0
+            if y <= 18 and x >= 30 and x <= 580:
+                v = False
             elif y <= 190 and x >= 580 and x <= 620:
-                v = 0
+                v = False
             else:
-                v = 10
+                v = True
         if dir == "down":
             if y >= 225 and x >= 580 and x <= 620:
-                v = 0
+                v = False
             elif y >= 405 and x <= 580 and x >= 30:
-                v = 0
+                v = False
             else:
-                v = 10
-        return v
+                v = True
+        if v == True:
+            return 10
+        elif v == False:
+            return 0
     def refresh(screen, img, x, y):
         screen.blit(pygame.image.load("./lib/img/br1.png"), (0,0))
         screen.blit(pygame.image.load(img),(x,y))
@@ -216,7 +229,7 @@ class room_one():
             pygame.event.get()
             k = pygame.key.get_pressed()
             if x >= 600 and y >= 180 and y <= 225:
-                room_two.board(screen, 30, 200)
+                room_two.board(screen, 30, y)
             events = room_one.events(k, screen, loop, img, x, y, clock)
             loop = events[0]            
             x = events[1]
