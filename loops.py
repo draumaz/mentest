@@ -8,9 +8,9 @@ class room_two():
         if key == "left":
             if x <= -5 and y >= 185 and y <= 225:
                 v = 0
-            elif x <= 265 and y >= 230 and y <= 440:
+            elif x <= 268 and y >= 230 and y <= 440:
                 v = 0
-            elif x <= 330 and x >= 290 and y >= 185 and y <= 190:
+            elif x <= 330 and x >= 290 and y >= 180 and y <= 190:
                 v = 0
             else:
                 v = 10
@@ -24,18 +24,18 @@ class room_two():
         if key == "down":
             if y >= 225 and x >= 0 and x <= 260:
                 v = 0
-            elif y >= 225 and x >= 350 and x <= 620:
+            elif y >= 225 and x >= 350 and x <= 630:
                 v = 0
-            elif y >= 440 and x >= 265 and x <= 345:
+            elif y >= 430 and x >= 265 and x <= 345:
                 v = 0
             else:
                 v = 10
         if key == "right":
-            if x >= 620 and y >= 185 and y <= 620:
+            if x >= 618 and y >= 180 and y <= 228:
                 v = 0
-            elif x >= 345 and y >= 230 and y <= 440:
+            elif x >= 342 and y >= 230 and y <= 440:
                 v = 0
-            elif x >= 285 and x <= 290 and y >= 185 and y <= 200:
+            elif x >= 280 and x <= 290 and y >= 180 and y <= 200:
                 v = 0
             else:
                 v = 10
