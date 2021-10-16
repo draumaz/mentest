@@ -130,22 +130,24 @@ class room_two():
                 loop2 = 0
             pygame.event.get()
             k = pygame.key.get_pressed()
-            if x <= 10 and 180 <= y <= 226:
-                h = pygame.Surface((640,480))
-                n = pygame.transform.scale(pygame.image.load("./lib/img/br2.png").convert(),(640,480))
-                for i in range(0,255):
-                    x = 255 - i
-                    h.set_alpha(i)
-                    h.fill((x,x,x))
-                    screen.blit(n,(0,0))
-                    screen.blit(h,(0,0))
-                    time.sleep(0.0005)
-                    pygame.display.flip()
-                room_one.board(screen, 590, y)
             events = room_two.events(k, screen, img, loop, loop2, x, y, clock)
             loop = events[0]
             loop2 = events[1]
             img = events[2]
+            if x <= 10 and 180 <= y <= 226:
+                h = pygame.Surface((640,480))
+                n = pygame.transform.scale(pygame.image.load("./lib/img/br2.png").convert(),(640,480))
+                for i in range(0,50):
+                    l = 50 - i
+                    h.set_alpha(i)
+                    h.fill((l,l,l))
+                    screen.blit(n,(0,0))
+                    screen.blit(h,(0,0))
+                    screen.blit(pygame.image.load(img), (x, y))
+                    screen.blit(pygame.transform.scale(pygame.image.load("./lib/spr/spr_saveemblem.png").convert(),(40,40)),(300,175))
+                    time.sleep(0.0005)
+                    pygame.display.flip()
+                room_one.board(screen, 590, y)
             x = events[3]
             y = events[4]
             room_two.refresh(screen, img, x, y, loop2)
@@ -246,25 +248,24 @@ class room_one():
                 loop = 0
             pygame.event.get()
             k = pygame.key.get_pressed()
-            if x >= 600 and 180 <= y <= 225:
-                h = pygame.Surface((640,480))
-                n = pygame.transform.scale(pygame.image.load("./lib/img/br1.png").convert(),(640,480))
-                for i in range(0,255):
-                    x = 255 - i
-                    if (x <= 0):
-                        break
-                    h.set_alpha(i)
-                    h.fill((x,x,x))
-                    screen.blit(n,(0,0))
-                    screen.blit(h,(0,0))
-                    time.sleep(0.001)
-                    pygame.display.flip()
-                room_two.board(screen, 30, y)
             events = room_one.events(k, screen, loop, img, x, y, clock)
             loop = events[0]
             x = events[1]
             y = events[2]
             img = events[3]
+            if x >= 600 and 180 <= y <= 225:
+                h = pygame.Surface((640,480))
+                n = pygame.transform.scale(pygame.image.load("./lib/img/br1.png").convert(),(640,480))
+                for i in range(0,50):
+                    l = 50 - i
+                    h.set_alpha(i)
+                    h.fill((l,l,l))
+                    screen.blit(n,(0,0))
+                    screen.blit(h,(0,0))
+                    screen.blit(pygame.image.load(img), (x, y))
+                    time.sleep(0.003)
+                    pygame.display.flip()
+                room_two.board(screen, 30, y)
             print(round(x), round(y))
             # print(loop)
             room_one.refresh(screen, img, x, y)
