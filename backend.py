@@ -1,5 +1,6 @@
-import os, pygame, time
-
+import pygame
+from time import sleep
+from os import path
 
 def screen_fade(screen, orig, dest, sleep_time, reverse):
     for i in range(orig, dest):  # TODO find out if this is expensive
@@ -8,7 +9,7 @@ def screen_fade(screen, orig, dest, sleep_time, reverse):
         else:
             v = dest - i
             screen.fill((v, v, v))
-        time.sleep(sleep_time)
+        sleep(sleep_time)
         pygame.display.flip()
 
 
@@ -51,7 +52,7 @@ class savesys:
             return 0
 
     def exists():  # Savesys
-        if not (os.path.exists(savesys.config(0))):
+        if not (path.exists(savesys.config(0))):
             open(savesys.config(0), "w+").write(savesys.config(1) * (str(savesys.config(2)) + "\n"))
 
     def read():  # Savesys

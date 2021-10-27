@@ -1,4 +1,6 @@
-import pygame, sys, time
+import pygame
+from time import sleep
+from sys import exit
 from dialogdisp import disp_dialog
 from backend import savesys, text_colors_trip, screen_fade
 
@@ -145,7 +147,7 @@ class room_two():
                     screen.blit(h,(0,0))
                     screen.blit(pygame.image.load(img), (x, y))
                     screen.blit(pygame.transform.scale(pygame.image.load("./lib/spr/spr_saveemblem.png").convert(),(40,40)),(300,175))
-                    time.sleep(0.0005)
+                    sleep(0.0005)
                     pygame.display.flip()
                 room_one.board(screen, 590, y)
             x = events[3]
@@ -263,7 +265,7 @@ class room_one():
                     screen.blit(n,(0,0))
                     screen.blit(h,(0,0))
                     screen.blit(pygame.image.load(img), (x, y))
-                    time.sleep(0.003)
+                    sleep(0.003)
                     pygame.display.flip()
                 room_two.board(screen, 30, y)
             print(round(x), round(y))
@@ -347,8 +349,8 @@ class splash():
             elif x == 3:
                 pygame.mixer.music.load("./lib/snd/snd_quit.ogg")
                 pygame.mixer.music.play()
-                time.sleep(0.17)
-                sys.exit()
+                sleep(0.17)
+                exit()
 
 
 def WIP_loop(screen):
@@ -363,6 +365,6 @@ def WIP_loop(screen):
     ]
     x = [0.05, 0.05, 0.05, 0.05, 0.05]
     for i in range(0, len(d)):
-        time.sleep(0.15)
+        sleep(0.15)
         disp_dialog(screen, d[i], x[i], 20, 300)
     savesys.write(0, 1)

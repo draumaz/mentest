@@ -1,5 +1,5 @@
 import pygame
-import time
+from time import sleep
 
 
 def disp_dialog_pause(screen):
@@ -29,7 +29,7 @@ def disp_dialog(screen, text, sleep_time, init_pos_x, init_pos_y):
                     sleep_time = 0
         screen.blit(pygame.font.SysFont("lucidasans", 25).render(t[i], False, (255, 255, 255)),
                     (init_pos_x, init_pos_y))  # Loop print with x,y vars
-        time.sleep(sleep_time)
+        sleep(sleep_time)
         mus = "./lib/snd/"
         if sleep_time <= 0:
             mus += "snd_silence.ogg"
